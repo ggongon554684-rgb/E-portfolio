@@ -1,0 +1,497 @@
+/* ========================================
+   1. CSS RESET & VARIABLES
+   ======================================== */
+:root {
+  /* Color Palette */
+  --primary-color: #667eea;
+  --primary-dark: #764ba2;
+  --secondary-color: #0d6efd;
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+  --white-color: #ffffff;
+  --text-primary: #333333;
+  --text-muted: #666666;
+
+  /* Spacing */
+  --section-padding: 80px 0;
+  --navbar-height: 70px; /* Increased for better touch targets */
+
+  /* Transitions */
+  --transition-fast: 0.3s ease;
+  --transition-smooth: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.2);
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Radius */
+  --radius-md: 15px;
+  --radius-lg: 50px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: var(--navbar-height);
+  overflow-x: hidden;
+  line-height: 1.6;
+
+  /* GLOBAL PURPLE GRADIENT */
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--white-color);
+}
+
+/* Fix for anchor links hiding behind navbar */
+section {
+  scroll-margin-top: var(--navbar-height);
+}
+
+/* ========================================
+   2. NAVIGATION (Polished)
+   ======================================== */
+.navbar {
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+  /* Glassmorphism Navbar */
+  background-color: rgba(33, 37, 41, 0.85) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+  color: var(--secondary-color) !important;
+}
+
+.nav-link {
+  font-weight: 500;
+  margin: 0 5px;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--secondary-color) !important;
+  font-weight: 700;
+}
+
+/* ========================================
+   3. HERO SECTION (Fixed Layout)
+   ======================================== */
+.hero-section {
+  background: transparent;
+  color: var(--white-color);
+  position: relative;
+  min-height: 100vh;
+  padding-top: 10px;
+  padding-bottom: 0;
+  overflow: hidden;
+
+  /* Flexbox setup */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Pushes content towards bottom */
+}
+
+/* Texture Background */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,122.7C1248,107,1344,85,1392,74.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>')
+    no-repeat bottom;
+  background-size: cover;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Ensures alignment to bottom */
+}
+
+.hero-section .row {
+  height: 100%; /* Make row fill the container */
+  flex-grow: 1;
+}
+
+/* --- BUTTON STYLES --- */
+.hero-section .btn-primary {
+  padding: 12px 30px;
+  border-radius: var(--radius-lg);
+  background-color: var(--white-color);
+  color: var(--primary-dark);
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.hero-section .btn-primary:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- THE BIG IMAGE --- */
+.hero-image-wrapper {
+  display: flex;
+  align-items: flex-end; /* Aligns image to very bottom */
+  justify-content: center;
+  height: 100%;
+  pointer-events: none; /* Lets clicks pass through transparent parts */
+}
+
+.hero-img {
+  /* This controls the SIZE. 85vh = 85% of the screen height */
+  height: 85vh;
+  width: auto; /* Maintains aspect ratio */
+  max-width: none; /* Allows it to overflow width if needed */
+
+  /* Positioning */
+  transform-origin: bottom center;
+  margin-bottom: -10px; /* Slight tuck to ensure it sits on the edge */
+
+  /* Filter / Shadow */
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  transition: transform 0.5s ease;
+  pointer-events: auto; /* Re-enable clicks on the image itself */
+}
+
+.hero-img:hover {
+  transform: scale(1.05); /* Grows slightly on hover */
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 991px) {
+  .hero-section {
+    min-height: auto;
+    padding-bottom: 0;
+  }
+
+  .hero-img {
+    height: 50vh; /* Smaller on tablets/mobile */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-img {
+    height: 45vh; /* Even smaller on phones */
+    width: 100%;
+    object-fit: contain;
+    object-position: bottom;
+  }
+}
+
+/* ========================================
+   4. ABOUT SECTION (Glassmorphism)
+   ======================================== */
+.about-section {
+  padding: var(--section-padding);
+  background: transparent;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  color: white;
+}
+
+/* ========================================
+   5. SKILLS SECTION
+   ======================================== */
+.skills-section {
+  padding: var(--section-padding);
+  background: transparent;
+}
+
+.skills-section h2 {
+  color: var(--white-color);
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 30px;
+}
+
+.skill-item {
+  background: var(--white-color);
+  padding: 25px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.skill-item img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.skill-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.skill-achievement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.skill-item:hover .skill-achievement {
+  opacity: 1;
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ========================================
+   6. PROJECTS SECTION
+   ======================================== */
+.projects-section {
+  padding: var(--section-padding);
+  background: transparent;
+}
+
+.projects-section h2 {
+  color: var(--white-color);
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.project-card {
+  background: var(--white-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
+}
+
+.project-image {
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.1);
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-info {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-info h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.project-info p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+/* ========================================
+   7. HALL OF FAME (Glassmorphism Carousel)
+   ======================================== 
+/* ========================================
+   HALL OF FAME (Bootstrap Style Update)
+   ======================================== */
+.hall-of-fame-section {
+  padding: var(--section-padding);
+}
+
+.hall-of-fame-section h2 {
+  color: var(--white-color);
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* 1. Image Styling */
+.hall-of-fame-img {
+  height: 500px; /* Fixed height for consistency */
+  object-fit: cover; /* Ensures image fills the area without stretching */
+  object-position: center;
+  border-radius: 15px;
+  filter: brightness(0.8); /* Slightly darkens image so text pops */
+  transition: filter 0.3s ease;
+}
+
+.carousel-item:hover .hall-of-fame-img {
+  filter: brightness(1); /* Brightens on hover */
+}
+
+/* 2. Caption Styling */
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.7); /* Dark background for readability */
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+  padding: 20px;
+  bottom: 40px; /* Position from bottom */
+  max-width: 600px;
+  margin: 0 auto; /* Center it */
+  left: 0;
+  right: 0;
+}
+
+.carousel-caption h5 {
+  color: var(--secondary-color); /* Blue accent for title */
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.carousel-caption p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+/* ========================================
+   8. FOOTER
+   ======================================== */
+footer {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 50px;
+}
+
+/* ========================================
+   9. ANIMATIONS
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}
+.animate-fade-in-delay {
+  animation: fadeIn 1s ease-out 0.3s backwards;
+}
+.animate-fade-in-delay-2 {
+  animation: fadeIn 1s ease-out 0.6s backwards;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+  }
+  .hero-section .d-flex {
+    justify-content: center;
+  }
+  .hero-image-container {
+    margin-top: 40px;
+  }
+  .achievement-card {
+    margin: 0 10px;
+    min-height: 400px;
+  }
+}
